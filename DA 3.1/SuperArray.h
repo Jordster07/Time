@@ -19,6 +19,10 @@ public:
     void add(int num);              
     int get(int index) const;     
     void change(int index, int num); 
+    SuperIntArray& operator=(const SuperIntArray& right);
+    SuperIntArray operator+(const SuperIntArray& right);
+    int& operator[](int index);
+    friend std::ostream& operator<<(std::ostream& stream, SuperIntArray& right);
 
     static int getMax(int nums[], int size);
     static int getMin(int nums[], int size);

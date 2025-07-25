@@ -113,3 +113,49 @@ double SuperIntArray::getMean(int nums[], int size) {
     }
     return static_cast<double>(sum) / size;
 }
+
+SuperIntArray& SuperIntArray::operator=(const SuperIntArray& right) {
+    if (this != &right) {
+        delete[] nums;
+        numberOfNums = right.numberOfNums;
+        nums = new int[numberOfNums];
+        for (int i = 0; i < numberOfNums; ++i) {
+            nums[i] = right.nums[i];
+        }
+    }
+    return *this;
+}
+
+SuperIntArray SuperIntArray::operator+(const SuperIntArray& right) {
+    int newSize = numberOfNums + right.numberOfNums;
+    int* combined = new int[newSize];
+
+    for (int i = 0; i < numberOfNums; ++i) {
+        combined[i] = nums[i];
+    }
+    for (int j = 0; j < right.numberOfNums; ++j) {
+        combined[numberOfNums + j] = right.nums[j];
+    }
+
+    SuperIntArray result(combined, newSize);
+    delete[] combined;
+    return result;
+}
+int& SuperIntArray::operator[](int index) {
+    if (index >= 0 && index < numberOfNums) {
+        return nums[index];
+    } else {
+        std::cerr << "Index out of bounds.\n";
+        static int dummy = -1;
+        return dummy;
+    }
+}
+
+std::ostream& operator<<(std::ostream& stream, SuperIntArray& right) {
+    stream << "[ ";
+    for (int i = 0; i < right.getSize(); ++i) {
+        stream << right.getNums()[i] << " ";
+    }
+    stream << "]";
+    return stream;
+}
